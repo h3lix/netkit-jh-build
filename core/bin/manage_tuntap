@@ -26,13 +26,14 @@
 # is "start").
 NETKIT_HOME=$1    # NETKIT_HOME environment variable. Environment was reset after sudo so we pass it in command line.
 ACTION=$2         # either "start" or "stop"
-USER_NAME=$3      # name of the user the tunnel is being configured for
-TAP_ADDRESS=$4    # address of the (host side) tap interface
-GUEST_ADDRESS=$5  # address of the (virtual machine side) guest interface
-HUB_NAME=$6       # name of the virtual hub
+USER_NAME=$3
+TAP_DEVICE=$4      # name of the user the tunnel is being configured for
+TAP_ADDRESS=$5    # address of the (host side) tap interface
+GUEST_ADDRESS=$6  # address of the (virtual machine side) guest interface
+HUB_NAME=$7       # name of the virtual hub
 
 
-TAP_DEVICE="nk_tap_$USER_NAME"
+#TAP_DEVICE="nk_tap_$USER_NAME"
 
 
 # Include some important entries inside the path along with $NETKIT_HOME/bin

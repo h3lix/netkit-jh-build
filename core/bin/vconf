@@ -142,7 +142,7 @@ parseCmdLine() {
                exit 1
             fi
             if containsRegexp CURRENT_ARGUMENT "," || containsRegexp CURRENT_ARGUMENT "\\."; then
-               if [ "${CURRENT_ARGUMENT#tap,}" = "$CURRENT_ARGUMENT" ]; then
+               if [ "${CURRENT_ARGUMENT#tap*,}" = "$CURRENT_ARGUMENT" ]; then
                   # This is not a special hub, but its name contains a comma
                   warning "$SCRIPTNAME" "$CMDLINE" "$0" \
                         "Invalid collision domain: $CURRENT_ARGUMENT (commas and dots are only allowed for Internet connected collision domains)."
@@ -234,7 +234,7 @@ setupInterfaces() {
          warning "$SCRIPTNAME" "$CMDLINE" "$0" "Invalid tap collision domain specification: \"$1\"."
          exit 1
       fi
-      if containsRegexp HUB_NAME "tap,"; then
+      if containsRegexp HUB_NAME "tap.*,"; then
          # This is an Internet connected (i.e., "tap") collision domain
          CHECK_TAP=`echo $HUB_NAME | awk -v FS="," \
             '
@@ -244,7 +244,7 @@ setupInterfaces() {
                       !match($3,"^[0-9]+\\\.[0-9]+\\\.[0-9]+\\\.[0-9]+$"))
                      print 0
                   else {
-                     print "HUB_NAME=tap"
+                     print "HUB_NAME=" $1
                      print "TAP_ADDRESS=" $2
                      print "GUEST_ADDRESS=" $3
                   }
@@ -260,6 +260,7 @@ setupInterfaces() {
       fi
 
       HUB_SOCKET="${HUB_SOCKET_DIR}/${HUB_SOCKET_PREFIX}_${USERID}_${HUB_NAME}${HUB_SOCKET_EXTENSION}"
+      echo "VCONF HUB SOCKET" $HUB_SOCKET
       
       if containsRegexp MCONSOLE_CMD "${DEVICE}=daemon,,,"; then
          warning "$SCRIPTNAME" "$CMDLINE" "$0" "Duplicate interface: $DEVICE."
