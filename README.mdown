@@ -1,4 +1,6 @@
 # Netkit-JH - NAMED TUNTAP
+This fork was created for my university 3rd year project so that I could use multiple TunTap interfaces within Netkit
+
 Documentation can be found at https://netkit-jh.github.io/
 
 ## Building from source
